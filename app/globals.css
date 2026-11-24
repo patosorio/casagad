@@ -1,26 +1,123 @@
+/* Brand v2 tokens from 03-design/assets/casagad.css. No Google Fonts. */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-bianco: #ffffff;
+  --color-calce: #f6f3ee;
+  --color-linea: #e4dfd7;
+  --color-inchiostro: #1e2b33;
+  --color-pietra: #6b7377;
+  /* G4 darkens Pietra on Calce so small text clears WCAG AA (4.37:1 was short). */
+  --color-pietra-calce: #60686c;
+  --color-mare: #0f6873;
+  --color-persiana: #5b8db8;
+  --color-coccio: #a9573a;
+  --color-field-border: #c9c3b9;
+  --color-tbc-bg: #fbf3e8;
+  --color-ok-bg: #eaf3f2;
+  --color-err-bg: #f8ece7;
+
+  --font-display: var(--font-cormorant-latin), var(--font-cormorant-latin-ext), Georgia, serif;
+  --font-body: var(--font-jost-latin), var(--font-jost-latin-ext), "Helvetica Neue", Arial, sans-serif;
+
+  --text-hero: 40px;
+  --text-hero--line-height: 1.1;
+  --text-h1: 34px;
+  --text-h1--line-height: 1.1;
+  --text-h2: 28px;
+  --text-h2--line-height: 1.2;
+  --text-h3: 22px;
+  --text-h3--line-height: 1.3;
+  --text-lead: 19px;
+  --text-lead--line-height: 1.6;
+  --text-body: 17px;
+  --text-body--line-height: 1.65;
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+  --text-eyebrow: 12px;
+  --text-eyebrow--line-height: 1.4;
+
+  --tracking-display: -0.005em;
+  --tracking-eyebrow: 0.18em;
+
+  --radius-brand: 2px;
+
+  --spacing-gutter: 22px;
+  --spacing-tap: 48px;
+  --container-wrap: 1120px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (min-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --spacing-gutter: 40px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (min-width: 1024px) {
+  :root {
+    --text-hero: 64px;
+    --text-hero--line-height: 1.05;
+    --text-h1: 48px;
+    --text-h2: 36px;
+    --text-h3: 24px;
+    --text-lead: 21px;
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-bianco);
+    color: var(--color-inchiostro);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: var(--text-body--line-height);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    font-variant-numeric: lining-nums;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    line-height: var(--text-h1--line-height);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: 400;
+    line-height: var(--text-h3--line-height);
+  }
+
+  a {
+    color: var(--color-mare);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-mare);
+    outline-offset: 3px;
+  }
 }

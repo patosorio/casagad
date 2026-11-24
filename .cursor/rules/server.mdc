@@ -1,0 +1,28 @@
+---
+description: Server-only domain, transactions, and idempotency
+globs: server/**
+alwaysApply: false
+---
+
+# Server modules
+
+Start every file under `server/` with `import "server-only"`. Domain, use cases, repositories, adapters, auth, workers, and audit live here. Routes and components call use cases. They do not contain business rules.
+
+One Firestore transaction per business change writes the business state, the audit row, and outbox items together.
+
+```ts
+// Bad: Stripe, Resend, fetch, or Storage inside the callback. It can re-run.
+await db.runTransaction(async (tx) => {
+  await stripe.checkout.sessions.create({ /* ... */ });
+});
+
+// Good: commit state + audit + outbox, then call Stripe with an idempotency key.
+await db.runTransaction(async (tx) => {
+  tx.set(bookingRef, { checkoutOpId, checkoutPending: true });
+  tx.set(auditRef, { action: "checkout.requested" });
+  tx.set(outboxRef, { status: "pending" });
+});
+await stripe.checkout.sessions.create(params, { idempotencyKey: checkoutOpId });
+```
+
+Do not take amounts from the client. Money is integer cents, EUR. Stay dates are `YYYY-MM-DD`, Europe/Rome, check-out exclusive. Logs carry correlation and booking ids only. Firebase Admin uses Application Default Credentials. No service-account key files.

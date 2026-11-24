@@ -1,0 +1,15 @@
+---
+description: URL language, i18next instances, and locale files
+globs: app/**,components/**,locales/**
+alwaysApply: false
+---
+
+# i18n
+
+The URL decides the language. Italian is the default at `/`. English is at `/en/`. Admin is Italian only. No browser language detector, no locale cookie, no automatic redirects.
+
+Create a new i18next instance per server render with `createInstance`. Do not call `changeLanguage` on a shared instance. Client islands get an `I18nextProvider` with the same locale and only the namespaces that island needs.
+
+Strings live in `locales/{it,en}/{common,site,booking,errors}.json` and `locales/it/admin.json`. The English key tree must match Italian for the public namespaces. Format with `Intl` and an explicit locale (`it-IT` / `en-GB`). Currency is always EUR. Timezone is Europe/Rome. Use plural keys (`_one` / `_other`) for nights and guests.
+
+Copy comes from brand v2 and the approved G4 HTML. Do not render `[GUIDO: …]`, `[ASK FAMILY: …]`, or `[ACCOUNTANT …]`. Unconfirmed facts come from settings or stay hidden. Map domain errors to an `errors` key. Never show a raw zod or stack message.

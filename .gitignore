@@ -30,8 +30,24 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — ignore secrets, keep the name-only example
 .env*
+!.env.example
+
+# firebase and emulator data
+.firebase/
+emulator-data/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+pubsub-debug.log
+database-debug.log
+storage-debug.log
+
+# playwright
+/playwright-report/
+/test-results/
+/blob-report/
 
 # vercel
 .vercel

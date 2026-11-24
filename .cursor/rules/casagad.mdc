@@ -1,0 +1,36 @@
+---
+description: Casa Gad standing rules for every session
+alwaysApply: true
+---
+
+You are working on Casa Gad, a bilingual (IT default at /, EN at /en/) direct-booking site with an Italian-only owner admin, for one holiday house. Read 02-docs/00-README.md and 02-docs/09-technical-resolutions.md before any change. 09 overrides older "pending TR" notes.
+
+Execution
+- You only read and edit files. Never run commands, git, installs, emulators, builds or deploys. At the end of every prompt, list the exact commands Patricia should run, in order, in a fenced block.
+- Edit only inside casagad/web/ unless the prompt says otherwise. Never create, open or edit .env, .env.local or any secret file. Only .env.example (names, no values).
+- Stop at the prompt's stopping point. Do not start the next step.
+
+Architecture (approved OD-02)
+- One Next.js App Router app (TypeScript strict) on Firebase App Hosting. No Cloud Functions, no Python, no static export.
+- web/app = routes, layouts, thin route handlers and server actions only. web/server = server-only domain, use cases, repositories, adapters (firestore, stripe, mail, ical, pdf), auth, workers, audit; start each server file with `import 'server-only'`. web/shared = pure types, zod schemas, date/pricing helpers safe for client and server. web/components = UI (ui/, site/, booking/, admin/). No business logic in components or route files.
+- The browser never reads or writes Firestore. All reads happen on the server at request time; all writes go through server actions or route handlers that call use cases. Firestore/Storage rules are deny-all for clients.
+- One Firestore transaction per business change: business state + audit row + outbox items together. Never call Stripe, Resend, fetch or Storage inside a transaction callback (it can re-run).
+- Money: integer cents, EUR. Stay dates: YYYY-MM-DD, Europe/Rome, check-out exclusive. Never take amounts from the client.
+- Firebase Admin via Application Default Credentials (no service-account key files).
+
+Code quality
+- Follow current Next.js App Router practices for the pinned version (Next 16.4.x): Server Components by default, "use client" only for interactive islands, async request APIs, proxy.ts (not middleware.ts).
+- Clean, typed, small modules; no `any`, no casts to hide type errors; reuse components and layouts (one Header, one Footer, one Button set, shared form fields); consistent spacing and brand v2 tokens from the approved G4 HTML (03-design/assets/casagad.css) moved into Tailwind v4 @theme. One primary button per screen, 48 px tap targets, body ≥ 16 px, visible focus, WCAG 2.1 AA.
+- Validate every input with shared zod schemas on the server. Map domain errors to appCode (API §1) and to i18next `errors` keys; never show raw zod or stack messages.
+- Security: no secrets in client code or NEXT_PUBLIC_* except Firebase web config and the reCAPTCHA site key; no dangerouslySetInnerHTML; logs carry correlation and booking ids only, never emails, phones, ID data or full bodies.
+
+i18n (i18next + react-i18next, TS-04)
+- URL decides the language. No browser language detector, no locale cookie, no automatic redirects.
+- New i18next instance per server render (createInstance); client islands get an I18nextProvider initialised with the same locale and only the namespaces they need, so there is no hydration mismatch or flash.
+- All user-facing strings live in locales/{it,en}/{common,site,booking,errors}.json and locales/it/admin.json. Typed keys (CustomTypeOptions). EN key tree must equal IT for public namespaces (test enforces it). Intl with explicit locale (it-IT / en-GB), currency always EUR, timezone Europe/Rome; plural keys for nights/guests.
+- Copy comes from brand v2 / approved G4 HTML. Keep [GUIDO: …], [ASK FAMILY: …], [ACCOUNTANT …] values out of rendered copy: unconfirmed facts render from settings or stay hidden.
+
+Documentation and checks
+- Update web/README.md every prompt: what changed, structure, env var names, commands Patricia runs, local vs production behaviour, open items, "Needs design review" list.
+- Add or update tests for what you build (Vitest unit, rules tests, integration with emulators, Playwright where stated). Say which checks you could only review in source and which Patricia must run.
+- Final message of every prompt: files created/edited, acceptance criteria status (met in source / needs Patricia's run), commands for Patricia, open questions.
