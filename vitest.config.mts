@@ -1,16 +1,14 @@
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "vitest/config";
-
-const root = fileURLToPath(new URL(".", import.meta.url));
+import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    environment: "node",
-    include: ["tests/unit/**/*.test.ts"],
+    exclude: [...configDefaults.exclude, "tests/e2e/**"],
   },
   resolve: {
+    tsconfigPaths: true,
     alias: {
-      "@": root,
+      "server-only": fileURLToPath(new URL("./tests/stubs/server-only.ts", import.meta.url)),
     },
   },
 });

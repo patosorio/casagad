@@ -1,0 +1,55 @@
+# Draft App Hosting runtime. Public values are placeholders. Secret entries name Secret Manager secrets and carry no values.
+runConfig:
+  minInstances: 0
+  maxInstances: 2
+  concurrency: 80
+  cpu: 1
+  memoryMiB: 512
+
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "<set in console>"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "<set in console>"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "<set in console>"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "<set in console>"
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY
+    value: "<set in console>"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: STRIPE_SECRET_KEY
+    secret: STRIPE_SECRET_KEY
+    availability:
+      - RUNTIME
+  - variable: STRIPE_WEBHOOK_SECRET
+    secret: STRIPE_WEBHOOK_SECRET
+    availability:
+      - RUNTIME
+  - variable: VRBO_ICAL_URL
+    secret: VRBO_ICAL_URL
+    availability:
+      - RUNTIME
+  - variable: ICAL_EXPORT_TOKEN
+    secret: ICAL_EXPORT_TOKEN
+    availability:
+      - RUNTIME
+  - variable: EMAIL_API_KEY
+    secret: EMAIL_API_KEY
+    availability:
+      - RUNTIME

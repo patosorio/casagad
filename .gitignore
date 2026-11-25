@@ -37,12 +37,9 @@ yarn-error.log*
 # firebase and emulator data
 .firebase/
 emulator-data/
-firebase-debug.log
-firestore-debug.log
-ui-debug.log
-pubsub-debug.log
-database-debug.log
-storage-debug.log
+apphosting.emulator.yaml
+*firebase-adminsdk*.json
+*-debug.log
 
 # playwright
 /playwright-report/

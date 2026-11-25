@@ -35,7 +35,73 @@ npm install
 npm run dev
 ```
 
-The app reads no environment variables. Names, when any are added, go in `.env.example` only. Do not commit `.env` or `.env.local`.
+Copy `.env.example` to `.env.local` for local values. Do not commit `.env.local`. Names, and where each value lives, are under Environment and secrets.
+
+## Environment and secrets
+
+`.env.example` lists names only. Patricia sets every value. Do not paste secrets into chat, source, or `.env.example`.
+
+Local values live in `.env.local`. Production secrets live in Google Secret Manager. Production public config is set for App Hosting (the draft `apphosting.yaml` uses the placeholder `<set in console>` for those public names).
+
+| Name | Local | Production |
+|---|---|---|
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | `.env.local` | App Hosting env |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | `.env.local` | App Hosting env |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `.env.local` | App Hosting env |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | `.env.local` | App Hosting env |
+| `NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY` | `.env.local` | App Hosting env |
+| `NEXT_PUBLIC_APPCHECK_DEBUG` | `.env.local` | Leave unset |
+| `STRIPE_SECRET_KEY` | `.env.local` | Secret Manager |
+| `STRIPE_WEBHOOK_SECRET` | `.env.local` | Secret Manager |
+| `VRBO_ICAL_URL` | `.env.local` | Secret Manager |
+| `ICAL_EXPORT_TOKEN` | `.env.local` | Secret Manager |
+| `EMAIL_API_KEY` | `.env.local` | Secret Manager |
+| `EMAIL_FROM` | `.env.local` | App Hosting env, when that feature needs it |
+| `EMAIL_REPLY_TO` | `.env.local` | App Hosting env, when that feature needs it |
+| `APP_BASE_URL` | `.env.local` | App Hosting env, when that feature needs it |
+| `SCHEDULER_SA_EMAIL` | `.env.local` | App Hosting env, when that feature needs it |
+| `STORAGE_BUCKET` | `.env.local` | App Hosting env, when Storage is used |
+| `FIRESTORE_EMULATOR_HOST` | `.env.local` | Unset |
+| `FIREBASE_AUTH_EMULATOR_HOST` | `.env.local` | Unset |
+| `FIREBASE_STORAGE_EMULATOR_HOST` | `.env.local` | Unset |
+| `GCLOUD_PROJECT` | `.env.local` | Set by the runtime |
+
+`NEXT_PUBLIC_FIREBASE_*` and `NEXT_PUBLIC_RECAPTCHA_ENTERPRISE_SITE_KEY` are public identifiers. On App Hosting, a build that sees `FIREBASE_WEBAPP_CONFIG` copies that web config into the public Firebase names. `NEXT_PUBLIC_APPCHECK_DEBUG` is `true` only for local development.
+
+The five Secret Manager names are `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `VRBO_ICAL_URL`, `ICAL_EXPORT_TOKEN`, and `EMAIL_API_KEY`. `apphosting.yaml` references those names and does not contain the values. The Admin SDK uses Application Default Credentials. There is no service-account key file.
+
+`server/config/env.ts` checks the server names with zod. They stay optional until the feature that reads them. A missing or invalid required value throws an error that names the variable and does not print the value.
+
+After a production build, scan the browser and prerendered output:
+
+```bash
+npx tsx scripts/check-bundle-secrets.ts
+```
+
+The command exits non-zero when it finds `sk_live`, `sk_test`, `whsec_`, a Resend `re_` key, or a private-key marker. It prints the file and the marker, not the value. A clean scan prints `No secret markers in build output.`
+
+## Emulators
+
+Auth, Firestore, and Storage run in the emulator suite. `firebase.json` has no Hosting block. Rules deny every client read and write. The browser loads Auth and App Check only. Firestore and Storage are used on the server through `server/adapters/firestore/admin.ts`.
+
+From `web/`, in a separate terminal:
+
+```bash
+npx firebase emulators:start --project casagad-c1f81
+```
+
+The emulator UI listens on `http://127.0.0.1:4000`. Ports are Auth `9099`, Firestore `8080`, Storage `9199`.
+
+In `.env.local`, set the host variables to `host:port` with no scheme, and set `GCLOUD_PROJECT` to `casagad-c1f81`:
+
+```
+FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
+FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
+FIREBASE_STORAGE_EMULATOR_HOST=127.0.0.1:9199
+GCLOUD_PROJECT=casagad-c1f81
+```
+
+With any of those hosts set, the Admin SDK starts with the project id and does not load credentials. Unset the hosts to use a real project through Application Default Credentials.
 
 ## Scripts
 
@@ -109,7 +175,7 @@ tests/e2e/              Playwright
 | Privacy | `/privacy/` | `/en/privacy/` |
 | Cookies | `/cookie/` | `/en/cookies/` |
 
-Public paths end with `/`. A request without the slash redirects to the slashed URL. `server/` holds `.gitkeep` files only. A server module starts with `import "server-only"`.
+Public paths end with `/`. A request without the slash redirects to the slashed URL. A server module starts with `import "server-only"`.
 
 ## Internationalisation
 
