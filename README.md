@@ -110,7 +110,7 @@ With any of those hosts set, the Admin SDK starts with the project id and does n
 | `npm run dev` | Development server |
 | `npm test` | Unit tests with Vitest (`tests/unit`) |
 | `npm run test:headers` | Header and CSP checks against a running production server. Start the app first. It does not start one. |
-| `npm run test:rules` | Firestore rules tests in `tests/rules`. Passes when that folder has no tests. |
+| `npm run test:rules` | Firestore and Storage rules tests in `tests/rules`. Run them inside the emulator. See Data model. |
 | `npm run test:e2e` | Playwright against `http://127.0.0.1:3000`. Start the app first. It does not start one. Projects are mobile Safari, Android Chrome, and desktop Chrome. |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint |
@@ -183,6 +183,58 @@ tests/e2e/              Playwright
 | Cookies | `/cookie/` | `/en/cookies/` |
 
 Public paths end with `/`. A request without the slash redirects to the slashed URL. A server module starts with `import "server-only"`.
+
+## Data model
+
+Stay dates are `YYYY-MM-DD` in Europe/Rome. The check-in date is included and the check-out date is not. `shared/dates.ts` turns that range into nights, including across daylight-saving time. Money is integer cents, EUR. Instants are timestamps.
+
+Document shapes live in `shared/schemas/`. The types inferred from those schemas are re-exported from `shared/types.ts`. A booking moves only along the status table in `server/domain/booking-status.ts`: `request` to `accepted`, `confirmed`, `paid_in_full`, and `completed`, with side exits to `declined`, `expired`, and `cancelled`. Each collection has a typed converter in `server/repositories/`. A converter reads and writes the stored document. It does not decide prices, status, or who is allowed.
+
+Never rename a field once data exists. Add a new field instead. The names in the schemas are the stored names.
+
+The browser never reads or writes Firestore or Storage. `firestore.rules` and `storage.rules` deny every client read and write. The server uses the Admin SDK, which does not use those rules, and checks the caller's role itself.
+
+| Document | What it stores |
+|---|---|
+| `users/{uid}` | Profile, `role` (`owner` or `family`), `active` |
+| `bookings/{id}` | Request or booking, quote snapshot, hold and checkout fields |
+| `bookings/{id}/payments/{id}` | Deposit, balance, or refund |
+| `bookings/{id}/refundOps/{id}` | One refund attempt |
+| `bookings/{id}/guestRegistry/{id}` | Alloggiati guest data |
+| `nights/{YYYY-MM-DD}` | The lock for one night |
+| `blocks/{id}` | Owner, family, or maintenance block |
+| `externalEvents/{uid}` | One VRBO calendar event |
+| `seasons/{id}` | A rate season |
+| `settings/public` | Fees, deposit percent, `holdHours` (1–24), `bookingWindowDays`, house details, CIN |
+| `settings/private` | `vrboSyncEnabled`, `notificationEmails` |
+| `settings/ratesMeta` | Rate version stored on a quote |
+| `public/calendar` | Unavailable ranges, no personal data |
+| `familyCalendar/current` | Ranges with ref, guest first name, and kind |
+| `messages/{id}` | Contact form message |
+| `counters/{name}` | Booking-ref and receipt sequences |
+| `stripeEvents/{eventId}` | Webhook id, `processing` or `done` |
+| `rateLimits/{key}` | Public submit counters |
+| `auditLog/{id}` | Who did what, and when |
+| `outbox/{opId}` | Email, receipt, and calendar work |
+| `syncState/vrbo` | Last VRBO import |
+| `leases/{name}` | Short worker lease |
+| `meta/occupancy` | Occupancy version for the calendar projections |
+
+Composite indexes are in `firestore.indexes.json`: bookings by status and check-in, by check-in and check-out, by status and `holdExpiresAt`, and by `needsAttention` and `updatedAt`; messages by status and `createdAt`; outbox by status and `nextAttemptAt`. `blocks.from` and collection-group `payments.paidAt` stay on single-field indexes. `guestMessage` and `messages.body` are not indexed.
+
+`scripts/seed-emulator.ts` writes fake seasons, settings, a booking in each status, blocks, and an owner and a family user into the Firestore emulator. Nightly amounts are 1 cent and fees are 0. Those are placeholders, not rates for the house. The script also writes the night locks for those bookings and blocks, the rates version, one sample payment, and one sample refund. It does not create sign-in accounts. It refuses to start unless `FIRESTORE_EMULATOR_HOST` is the emulator `host:port`.
+
+With the emulator running and that variable set (see Emulators):
+
+```bash
+npx tsx scripts/seed-emulator.ts
+```
+
+Rules tests deny anonymous, family, and owner clients on every document above. They run against the emulator:
+
+```bash
+npx firebase emulators:exec --only firestore,storage "npm run test:rules"
+```
 
 ## Internationalisation
 
