@@ -7,9 +7,9 @@ import { fontVariableClassName } from "@/lib/fonts";
  * Full 404 document for an unmatched URL. There is no root layout to wrap it.
  * `noindex` is also set by metadata on `app/global-not-found.tsx`.
  */
-export function NotFoundDocument({ locale }: { locale: Locale }) {
+export function NotFoundDocument({ locale, nonce }: { locale: Locale; nonce?: string }) {
   return (
-    <html lang={locale} className={`${fontVariableClassName} h-full antialiased`}>
+    <html lang={locale} className={`${fontVariableClassName} h-full antialiased`} nonce={nonce}>
       <head>
         <meta name="robots" content="noindex" />
       </head>

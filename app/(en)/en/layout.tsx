@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { headers } from "next/headers";
 import { PublicChrome } from "@/components/site/PublicChrome";
 import { fontVariableClassName } from "@/lib/fonts";
+import { NONCE_HEADER } from "@/lib/security/csp";
 import "../../globals.css";
 
 export const metadata: Metadata = {
@@ -11,10 +13,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function EnglishLayout({ children }: { children: ReactNode }) {
-  // TODO(Prompt 04): read the per-request nonce with `(await headers()).get("x-nonce")` and pass it where Next needs it.
+/** A nonce exists only after the request arrives, so this document cannot be a static shell. */
+export const instant = false;
+
+export default async function EnglishLayout({ children }: { children: ReactNode }) {
+  const nonce = (await headers()).get(NONCE_HEADER) ?? undefined;
   return (
-    <html lang="en" className={`${fontVariableClassName} h-full antialiased`}>
+    <html lang="en" className={`${fontVariableClassName} h-full antialiased`} nonce={nonce}>
       <body className="flex min-h-full flex-col bg-bianco font-body text-body text-inchiostro">
         <PublicChrome locale="en">{children}</PublicChrome>
       </body>

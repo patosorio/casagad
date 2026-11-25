@@ -109,6 +109,7 @@ With any of those hosts set, the Admin SDK starts with the project id and does n
 |---|---|
 | `npm run dev` | Development server |
 | `npm test` | Unit tests with Vitest (`tests/unit`) |
+| `npm run test:headers` | Header and CSP checks against a running production server. Start the app first. It does not start one. |
 | `npm run test:rules` | Firestore rules tests in `tests/rules`. Passes when that folder has no tests. |
 | `npm run test:e2e` | Playwright against `http://127.0.0.1:3000`. Start the app first. It does not start one. Projects are mobile Safari, Android Chrome, and desktop Chrome. |
 | `npm run typecheck` | `tsc --noEmit` |
@@ -138,7 +139,13 @@ curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/en/the-house/
 npm run test:e2e
 ```
 
-Expect 404 for `/xyz/` and `/en/xyz/`, the matching `lang` and 404 sentence, a count of `0` for `__next_error__`, and 200 for `/la-casa/` and `/en/the-house/`. A production build lists `/_not-found` as dynamic (`ƒ`), the public pages as static (`○`), and the proxy.
+Expect 404 for `/xyz/` and `/en/xyz/`, the matching `lang` and 404 sentence, a count of `0` for `__next_error__`, and 200 for `/la-casa/` and `/en/the-house/`. A production build lists HTML routes, including the public pages and `/_not-found`, as dynamic (`ƒ`), and lists the proxy. HTML is dynamic because each response carries a nonce. See Security headers and CSP.
+
+With `npm start` still running on port 3000, in another terminal:
+
+```bash
+npm run test:headers
+```
 
 ## Project structure
 
@@ -234,3 +241,30 @@ There is no `[...slug]` catch-all and no `app/not-found.tsx`. An unknown URL mat
 | `/enx/` | Italian (`/en` is a segment, not a string prefix) |
 
 `app/(it)/not-found.tsx`, `app/(en)/en/not-found.tsx`, and `app/(admin)/admin/not-found.tsx` only cover a `notFound()` thrown inside a page that did match.
+
+## Security headers and CSP
+
+Every HTML response is rendered for that request. A nonce is created when the request arrives, so the document cannot be a static shell: a cached page would reuse the nonce. The Italian, English, and admin root layouts, and `app/global-not-found.tsx`, read `x-nonce` with `headers()` and set `instant` to `false`. That allows the read under `cacheComponents` and makes every HTML route dynamic. Hashed files under `/_next/static` stay cacheable.
+
+`proxy.ts` still sets `x-casagad-locale` from the path first, and overwrites a client value. It then creates a nonce (`crypto.randomUUID()` as base64), sets `x-nonce` on the request, and sets `Content-Security-Policy-Report-Only` on the request and the response. Next reads `'nonce-…'` from that request header and applies it to the scripts and styles it generates. The same value is passed on `<html>` for any later `next/script` nonce.
+
+The policy is report-only. `script-src` is `'self'`, the nonce, `'strict-dynamic'`, and the reCAPTCHA and Google sign-in hosts. It does not include `'unsafe-inline'`. `'unsafe-eval'` is added only when `NODE_ENV` is `development`. Reports are sent to `POST /api/csp-report`.
+
+That route returns 204. It logs a short summary: the directive, the blocked origin (no query string), and whether the browser would have enforced the policy. It does not log the body, the nonce, the page URL, or a script sample. An in-memory per-address limit drops extra log lines on one instance. That limit is not a security control.
+
+`next.config.ts` `headers()` sets these on every path:
+
+| Header | Value |
+|---|---|
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains; preload` |
+| `X-Content-Type-Options` | `nosniff` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Permissions-Policy` | `camera=(), microphone=(), geolocation=(), payment=()` |
+| `X-Frame-Options` | `DENY` |
+| `Cross-Origin-Opener-Policy` | `same-origin-allow-popups` |
+
+HTML responses, including unknown URLs, use `Cache-Control: private, no-store`. `/admin` and the booking result pages also send `X-Robots-Tag: noindex, nofollow`. Those pages are `/prenota/richiesta-inviata/`, `/prenota/pagamento-ok/`, `/prenota/pagamento-annullato/`, `/en/book/request-sent/`, `/en/book/payment-ok/`, and `/en/book/payment-cancelled/`. `/_next/static` is `public, max-age=31536000, immutable`. A calendar feed at `/calendar/{token}.ics` is `private, max-age=300`. Until that route exists, the same URL is the dynamic 404: no CSP header, and Next sends `no-store` on that 404.
+
+The proxy does not run for `/_next/static`, `/_next/image`, `/fonts/`, `/images/`, favicon, `/calendar/*.ics`, `/api/stripe/webhook`, or `/api/internal/`. Those responses do not get a nonce or a CSP header. Unknown URLs under `/` and `/en/` still get the locale header and a nonce.
+
+`npm test` does not call the running server. With `npm start` on port 3000, `npm run test:headers` checks the headers above, including that two requests to `/` carry different nonces.

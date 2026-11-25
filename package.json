@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run tests/unit",
+    "test:headers": "CASAGAD_HEADERS_TEST=1 vitest run tests/integration/headers.test.ts",
     "test:rules": "vitest run --passWithNoTests tests/rules",
     "test:e2e": "playwright test"
   },

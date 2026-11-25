@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { headerRules } from "./lib/security/response-headers";
 
 // App Hosting provides FIREBASE_WEBAPP_CONFIG at build time. Copy the public
 // fields onto NEXT_PUBLIC_FIREBASE_* so the browser bundle can see them.
@@ -14,6 +15,9 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
+  async headers() {
+    return headerRules();
+  },
   turbopack: {
     rules: {
       "*.css": {
