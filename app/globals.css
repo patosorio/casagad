@@ -91,16 +91,19 @@
   }
 
   h1 {
+    margin: 0 0 20px;
     font-size: var(--text-h1);
     line-height: var(--text-h1--line-height);
   }
 
   h2 {
+    margin: 0 0 16px;
     font-size: var(--text-h2);
     line-height: var(--text-h2--line-height);
   }
 
   h3 {
+    margin: 0 0 10px;
     font-size: var(--text-h3);
     font-weight: 400;
     line-height: var(--text-h3--line-height);
@@ -120,4 +123,23 @@
     outline: 2px solid var(--color-mare);
     outline-offset: 3px;
   }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* Line measure inside Container. The container itself stays on the shared wrap. */
+.narrow {
+  max-width: 720px;
+}
+
+/* Honeypot: off-screen, not display:none, so it stays out of the tab order via tabindex. */
+.hp {
+  position: absolute;
+  left: -5000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }

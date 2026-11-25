@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { PublicPage, publicPageMetadata } from "@/components/site/PublicPage";
+import { LocationPage } from "@/components/site/pages/LocationPage";
+import { pageMetadata } from "@/lib/seo/metadata";
 
 export function generateMetadata(): Promise<Metadata> {
-  return publicPageMetadata("it", "location");
+  return pageMetadata("it", "location");
 }
 
-export default function ItalianLocationPage() {
-  return <PublicPage locale="it" page="location" />;
+export default function Page() {
+  return <LocationPage locale="it" />;
 }

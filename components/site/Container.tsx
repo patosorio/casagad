@@ -1,8 +1,8 @@
 import type { ElementType, ReactNode } from "react";
 
 /**
- * Approved `.wrap` from 03-design/assets/casagad.css:
- * max-width 1120px, centered, horizontal gutter 22px (40px from 768px).
+ * Approved `.wrap`: max-width 1120px, centered, gutter 22px (40px from 768px).
+ * Header, footer and every public section use this. Do not add a second width.
  */
 const wrap = "mx-auto w-full max-w-wrap px-gutter";
 

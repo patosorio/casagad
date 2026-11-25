@@ -32,7 +32,7 @@ describe("content security policy", () => {
     expect(policy).toContain("https://checkout.stripe.com");
     expect(policy).toContain("frame-ancestors 'none'");
     expect(policy).toContain("object-src 'none'");
-    expect(policy).toContain("upgrade-insecure-requests");
+    expect(policy).not.toContain("upgrade-insecure-requests");
     expect(policy).toContain("report-uri /api/csp-report");
   });
 

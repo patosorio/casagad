@@ -39,7 +39,8 @@ export function contentSecurityPolicy(nonce: string, isDevelopment = process.env
     "base-uri 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",
-    "upgrade-insecure-requests",
+    // Left out while this header is report-only: browsers ignore it and still report it.
+    // Put it back when the header becomes Content-Security-Policy.
     "report-uri /api/csp-report",
   ];
 

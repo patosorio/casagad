@@ -11,33 +11,347 @@
     "book": "Prenota"
   },
   "pages": {
+    "home": { "h1": "Casa vacanze sulla spiaggia di Simius, a Villasimius" },
+    "house": { "h1": "La casa: tre camere, terrazza e giardino" },
+    "photos": { "h1": "Foto della casa e della spiaggia di Simius" },
+    "location": { "h1": "Dove siamo: Simius, Villasimius, Sardegna" },
+    "book": { "h1": "Verifica la disponibilità e prenota" },
+    "info": { "h1": "Informazioni utili per il soggiorno" },
+    "contact": { "h1": "Contatti" },
+    "privacy": { "h1": "Privacy" },
+    "cookies": { "h1": "Cookie" }
+  },
+  "meta": {
     "home": {
-      "h1": "Casa vacanze sulla spiaggia di Simius, a Villasimius"
+      "title": "Casa vacanze sul mare a Simius, Villasimius | Casa Gad",
+      "description": "Casa indipendente a 10 metri dalla spiaggia di Simius, Villasimius (Sardegna). 3 camere, 2 bagni, 6 + 2 ospiti, terrazza e giardino. Prenota diretto."
     },
     "house": {
-      "h1": "La casa: tre camere, terrazza e giardino"
+      "title": "La casa: 3 camere, terrazza e giardino | Casa Gad",
+      "description": "Tre camere matrimoniali e divano letto, due bagni, cucina, terrazza con solarium, verande, giardino, barbecue e doccia esterna calda."
     },
     "photos": {
-      "h1": "Foto della casa e della spiaggia di Simius"
+      "title": "Foto della casa e della spiaggia di Simius | Casa Gad",
+      "description": "Guarda la casa, il giardino, la terrazza e la spiaggia di Simius a Villasimius, Sardegna."
     },
     "location": {
-      "h1": "Dove siamo: Simius, Villasimius, Sardegna"
+      "title": "Dove siamo: spiaggia di Simius, Villasimius | Casa Gad",
+      "description": "A 1 minuto a piedi dalla spiaggia di Simius. Notteri a 15 minuti a piedi, Capo Carbonara a 18, aeroporto di Cagliari a 62 minuti in auto."
     },
     "book": {
-      "h1": "Verifica la disponibilità e prenota"
+      "title": "Prenota la casa vacanze a Villasimius | Casa Gad",
+      "description": "Verifica le date libere e prenota direttamente con noi. Check-in dalle 16:30, check-out entro le 10:00."
     },
     "info": {
-      "h1": "Informazioni utili per il soggiorno"
+      "title": "Informazioni utili: orari, animali, parcheggio | Casa Gad",
+      "description": "Orari di check-in e check-out, animali ammessi (uno), parcheggio, Wi-Fi, bambini e regole della casa."
     },
     "contact": {
-      "h1": "Contatti"
+      "title": "Contatti | Casa Gad, Villasimius",
+      "description": "Scrivici per qualsiasi domanda sulla casa vacanze a Simius, Villasimius."
     },
     "privacy": {
-      "h1": "Privacy"
+      "title": "Privacy | Casa Gad",
+      "description": "Informativa privacy di Casa Gad."
     },
     "cookies": {
-      "h1": "Cookie"
+      "title": "Cookie | Casa Gad",
+      "description": "Informativa cookie di Casa Gad."
     }
+  },
+  "alts": {
+    "0745": "Terrazza con lettini, palme e vista sul mare",
+    "0746": "Veranda coperta con tende bianche",
+    "0747": "Lettini sulla terrazza tra gli alberi",
+    "0748": "Bouganville, lettini e mare sullo sfondo",
+    "0749": "Vista aerea della spiaggia di Simius e delle colline",
+    "0752": "Veranda con tavolo da pranzo e divano",
+    "0754": "Veranda attrezzata per mangiare all'aperto",
+    "0756": "Cucina attrezzata con piastrelle colorate",
+    "0757": "Cucina con frigorifero e forno",
+    "0758": "Prato del giardino con sdraio",
+    "0759": "Veranda con divanetto e cuscini blu",
+    "0760": "Vialetto del giardino tra le piante",
+    "0761": "Camera con letto matrimoniale",
+    "0763": "Bagno con doccia, WC e bidet",
+    "0765": "Camera con letto matrimoniale e mappa alla parete",
+    "0767": "Camera con letto matrimoniale e cappelli di paglia alla parete",
+    "0768": "Camera con letto matrimoniale in ferro battuto",
+    "0769": "Soggiorno con camino",
+    "0770": "Tavolo in giardino sotto gli alberi",
+    "0772": "Amaca in giardino",
+    "0773": "Dettaglio: quadro con pesce",
+    "0774": "Panca con cuscino blu tra le bouganville",
+    "0775": "Facciata con edera e persiane blu"
+  },
+  "home": {
+    "eyebrow": "Simius · Villasimius · Sardegna",
+    "lead": "Una casa indipendente tra la macchia mediterranea, a 10 metri dal mare. Tre camere, 6 + 2 ospiti.",
+    "checkDates": "Verifica le date",
+    "seeHouse": "Guarda la casa",
+    "houseEyebrow": "La casa",
+    "houseTitle": "La casa",
+    "houseBody": "Tre camere, ognuna con letto matrimoniale, e un divano letto: 6 + 2 ospiti. Due bagni completi con doccia, WC e bidet; uno è dentro una camera. Cucina attrezzata e soggiorno con camino. Aria condizionata nelle camere, Wi-Fi. Lenzuola e asciugamani inclusi, anche quelli da spiaggia.",
+    "houseLink": "Scopri la casa",
+    "cards": {
+      "bedroom": {
+        "eyebrow": "Camera",
+        "title": "Camera con letto matrimoniale",
+        "facts": "Aria condizionata · Lenzuola incluse",
+        "link": "Vedi la casa"
+      },
+      "kitchen": {
+        "eyebrow": "Cucina",
+        "title": "Cucina attrezzata",
+        "link": "Vedi la casa"
+      },
+      "outdoor": {
+        "eyebrow": "Esterni",
+        "title": "Verande e giardino",
+        "facts": "Barbecue · Doccia esterna calda",
+        "link": "Vedi le foto"
+      }
+    },
+    "seaTitle": "A 10 metri dal mare",
+    "seaBody": "Esci dalla porta e sei sulla spiaggia di Simius: un minuto a piedi. Abbiamo gli ombrelloni da spiaggia, se ti servono.",
+    "outsideTitle": "Gli spazi esterni",
+    "outsideLead": "Terrazza con solarium, verande attrezzate per mangiare all'aperto, giardino, barbecue e doccia esterna con acqua calda.",
+    "whereTitle": "Dove siamo",
+    "whereBody": "Simius, Villasimius, nel sud della Sardegna.",
+    "whereLink": "Come arrivare →",
+    "datesTitle": "Verifica le date",
+    "datesLead": "Scegli le date e prenota direttamente con noi.",
+    "datesLink": "Vai al calendario",
+    "glanceTitle": "In breve"
+  },
+  "glance": {
+    "checkIn": "Check-in dalle 16:30",
+    "checkOut": "Check-out entro le 10:00",
+    "pet": "Accettiamo un animale",
+    "parking": "Parcheggio in loco",
+    "smoking": "Non fumatori",
+    "parties": "No feste o eventi",
+    "children": "Bambini benvenuti"
+  },
+  "details": {
+    "address": "Indirizzo",
+    "price": "Prezzo / notte",
+    "deposit": "Acconto",
+    "cancellation": "Cancellazione",
+    "checkInMethod": "Modalità di check-in",
+    "season": "Stagione",
+    "error": "Non riusciamo a mostrare questi dati adesso.",
+    "retry": "Riprova"
+  },
+  "distances": {
+    "simius": { "name": "Spiaggia di Simius", "time": "1 min a piedi" },
+    "notteri": { "name": "Spiaggia del Notteri", "time": "15 min a piedi" },
+    "carbonara": { "name": "Area Marina Protetta di Capo Carbonara", "time": "18 min a piedi" },
+    "tanka": { "name": "Tanka Golf", "time": "9 min in auto" },
+    "giunco": { "name": "Spiaggia di Porto Giunco", "time": "16 min in auto" },
+    "airport": { "name": "Aeroporto di Cagliari Elmas (CAG)", "time": "62 min in auto" }
+  },
+  "reviews": {
+    "title": "Recensioni",
+    "onSource": "{{count}} recensioni su",
+    "checked": "verificato il {{date}}",
+    "source": "VRBO"
+  },
+  "house": {
+    "eyebrow": "La casa",
+    "lead": "Una casa indipendente tra la macchia mediterranea, a 10 metri dal mare.",
+    "bedroomsTitle": "Camere (3 matrimoniali + divano letto)",
+    "bedroomsBody": "Tre camere, ognuna con letto matrimoniale, e un divano letto: 6 + 2 ospiti. Aria condizionata nelle camere.",
+    "kitchenTitle": "Cucina e soggiorno",
+    "kitchenBody": "Cucina attrezzata e soggiorno con camino.",
+    "bathsTitle": "Due bagni",
+    "bathsBody": "Due bagni completi con doccia, WC e bidet; uno è dentro una camera.",
+    "terraceTitle": "Terrazza e verande",
+    "terraceBody": "Terrazza con solarium e verande attrezzate per mangiare all'aperto.",
+    "gardenTitle": "Giardino",
+    "gardenBody": "Giardino tra la macchia mediterranea, barbecue e doccia esterna con acqua calda.",
+    "includedTitle": "Cosa è incluso",
+    "rulesTitle": "Regole della casa",
+    "checkDates": "Verifica le date",
+    "included": {
+      "linen": "Lenzuola e asciugamani, anche da spiaggia",
+      "umbrellas": "Ombrelloni da spiaggia",
+      "wifi": "Wi-Fi",
+      "ac": "Aria condizionata nelle camere",
+      "parking": "Parcheggio in loco"
+    }
+  },
+  "photos": {
+    "outside": "Esterni",
+    "inside": "Interni",
+    "beach": "La spiaggia",
+    "close": "Chiudi",
+    "previous": "Foto precedente",
+    "next": "Foto successiva",
+    "dialog": "Foto ingrandita"
+  },
+  "location": {
+    "beachTitle": "La spiaggia di Simius",
+    "beachBody": "Esci dalla porta e sei sulla spiaggia di Simius: un minuto a piedi.",
+    "maps": "Apri in Google Maps",
+    "mapsNote": "(link, nessuna mappa incorporata: niente cookie di terze parti)",
+    "nearbyTitle": "Spiagge vicine: Notteri, Porto Giunco",
+    "nearbyBody": "Distanze dalla casa.",
+    "carbonaraTitle": "Capo Carbonara",
+    "carbonaraBody": "L'Area Marina Protetta di Capo Carbonara è a 18 minuti a piedi (1,6 km).",
+    "airportTitle": "Come arrivare (aeroporto di Cagliari)",
+    "airportBody": "Aeroporto di Cagliari Elmas (CAG) · 62 min in auto.",
+    "restaurantsTitle": "Ristoranti vicini"
+  },
+  "restaurants": {
+    "tartana": { "name": "Bar La Tartana", "time": "4 min in auto" },
+    "acqua": { "name": "Acqua e Sale", "time": "6 min in auto" },
+    "lobby": { "name": "Lobby Lounge Bar", "time": "6 min in auto" },
+    "delfino": { "name": "Delfino Club", "time": "18 min a piedi" },
+    "gnocco": { "name": "Gnocco&", "time": "19 min a piedi" }
+  },
+  "book": {
+    "stepsLabel": "Passaggi",
+    "stepDates": "Date e ospiti",
+    "stepRequest": "Richiesta",
+    "stepReply": "Risposta",
+    "stepDeposit": "Acconto",
+    "calendarTitle": "Calendario",
+    "chooseDates": "Scegli arrivo e partenza",
+    "previousMonth": "Mese precedente",
+    "nextMonth": "Mese successivo",
+    "dow": {
+      "mon": "Lu",
+      "tue": "Ma",
+      "wed": "Me",
+      "thu": "Gi",
+      "fri": "Ve",
+      "sat": "Sa",
+      "sun": "Do"
+    },
+    "legendFree": "Libero",
+    "legendBusy": "Non disponibile",
+    "legendChosen": "Scelto",
+    "arrival": "Arrivo",
+    "departure": "Partenza",
+    "checkInHelp": "Check-in dalle 16:30",
+    "checkOutHelp": "Check-out entro le 10:00",
+    "guests": "Ospiti",
+    "adults": "Adulti",
+    "fewerAdults": "Meno adulti",
+    "moreAdults": "Più adulti",
+    "children": "Bambini",
+    "fewerChildren": "Meno bambini",
+    "moreChildren": "Più bambini",
+    "pet": "Animale (massimo uno)",
+    "noPet": "Nessun animale",
+    "addPet": "Aggiungi animale",
+    "partyNote": "Massimo 6 + 2 ospiti (6 nei letti, 2 sul divano letto).",
+    "quoteTitle": "Il tuo preventivo",
+    "lines": {
+      "nights": "Notti",
+      "cleaning": "Pulizia finale",
+      "pet": "Animale",
+      "tax": "Imposta di soggiorno (se attiva)",
+      "total": "Totale",
+      "deposit": "Acconto per confermare",
+      "balance": "Saldo"
+    },
+    "quoteCaption": "Dettaglio prezzo",
+    "continue": "Continua con la richiesta",
+    "noPay": "Non paghi nulla ora. Paghi l'acconto solo dopo la nostra conferma.",
+    "howTitle": "Come funziona",
+    "how1": "Scegli date e ospiti, vedi il prezzo.",
+    "how2": "Mandaci la richiesta.",
+    "how3": "Se accettiamo, ricevi il link per l'acconto (Stripe).",
+    "timesTitle": "Orari",
+    "checkInLabel": "Check-in",
+    "checkInValue": "dalle 16:30",
+    "checkOutLabel": "Check-out",
+    "checkOutValue": "entro le 10:00",
+    "termsTitle": "Prezzi e condizioni"
+  },
+  "info": {
+    "faqTitle": "Domande frequenti",
+    "times": {
+      "q": "Orari di check-in?",
+      "a": "Check-in dalle 16:30, check-out entro le 10:00."
+    },
+    "pets": {
+      "q": "Animali?",
+      "a": "Accettiamo un animale."
+    },
+    "parking": {
+      "q": "Parcheggio?",
+      "a": "Parcheggio in loco."
+    },
+    "wifi": {
+      "q": "Wi-Fi?",
+      "a": "Sì, c'è il Wi-Fi."
+    },
+    "children": {
+      "q": "Bambini?",
+      "a": "Bambini benvenuti."
+    },
+    "smoking": {
+      "q": "Si può fumare o fare feste?",
+      "a": "Non fumatori. No feste o eventi."
+    },
+    "checkInMethod": {
+      "q": "Come avviene il check-in?"
+    },
+    "deposit": {
+      "q": "Deposito cauzionale?",
+      "a": "Si versa all'arrivo, come oggi."
+    }
+  },
+  "contact": {
+    "writeTitle": "Scrivici",
+    "name": "Nome",
+    "nameHelp": "Obbligatorio",
+    "email": "Email",
+    "emailHelp": "Inserisci un'email valida",
+    "message": "Messaggio",
+    "honeypot": "Website",
+    "consentBefore": "Ho letto l'",
+    "consentLink": "informativa privacy",
+    "consentAfter": " e acconsento al trattamento dei miei dati per rispondere a questo messaggio.",
+    "submit": "Invia messaggio",
+    "note": "Protetto da App Check (reCAPTCHA Enterprise, invisibile).",
+    "addressTitle": "Indirizzo",
+    "place": "Simius, Villasimius, Sardegna"
+  },
+  "legal": {
+    "privacy": {
+      "controller": "Titolare del trattamento",
+      "data": "Quali dati raccogliamo (richieste, prenotazioni, contatti)",
+      "basis": "Perché e su quale base giuridica",
+      "payments": "Pagamenti (Stripe)",
+      "guests": "Registrazione ospiti (Alloggiati Web)",
+      "retention": "Per quanto tempo",
+      "recipients": "Chi riceve i dati (Firebase/Google, Stripe, email)",
+      "transfers": "Trasferimenti fuori UE",
+      "rights": "I tuoi diritti",
+      "complaints": "Contatti e reclami (Garante)"
+    },
+    "cookies": {
+      "what": "Cosa sono",
+      "technical": "Cookie tecnici che usiamo",
+      "none": "Nessun cookie di profilazione o analisi di terze parti (v1)",
+      "recaptcha": "reCAPTCHA Enterprise (App Check)",
+      "manage": "Come gestirli nel browser"
+    }
+  },
+  "amenities": {
+    "wifi": "Wi-Fi",
+    "ac": "Aria condizionata nelle camere",
+    "parking": "Parcheggio in loco",
+    "linen": "Lenzuola e asciugamani",
+    "umbrellas": "Ombrelloni da spiaggia",
+    "barbecue": "Barbecue",
+    "shower": "Doccia esterna calda",
+    "terrace": "Terrazza",
+    "garden": "Giardino"
   },
   "notFound": {
     "title": "Pagina non trovata",

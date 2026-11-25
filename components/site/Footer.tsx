@@ -1,13 +1,21 @@
 import Link from "next/link";
 import { navLabel } from "@/components/site/nav-label";
-import { Container } from "@/components/ui/Container";
+import { Container } from "@/components/site/Container";
 import type { Locale } from "@/lib/i18n/config";
 import { footerNav, routes } from "@/lib/i18n/routes";
 import { getT } from "@/lib/i18n/server";
 
 const footerLink = "inline-flex min-h-tap items-center text-body text-inchiostro no-underline";
 
-export async function Footer({ locale, cin }: { locale: Locale; cin?: string }) {
+export async function Footer({
+  locale,
+  cin,
+  address,
+}: {
+  locale: Locale;
+  cin?: string;
+  address?: string;
+}) {
   const t = await getT(locale, "common");
   const site = await getT(locale, "site");
   const cinText = cin?.trim() ?? "";
@@ -24,6 +32,12 @@ export async function Footer({ locale, cin }: { locale: Locale; cin?: string }) 
               </span>
             </p>
             <p>{t("footer.place")}</p>
+            {address?.trim() ? (
+              <p className="mt-3">
+                <span className="text-eyebrow font-medium tracking-eyebrow uppercase">{t("footer.address")}</span>
+                <span className="mt-1 block text-inchiostro">{address.trim()}</span>
+              </p>
+            ) : null}
           </div>
           <div>
             <p className="text-eyebrow font-medium tracking-eyebrow text-pietra-calce uppercase">

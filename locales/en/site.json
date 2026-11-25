@@ -11,33 +11,347 @@
     "book": "Book"
   },
   "pages": {
+    "home": { "h1": "Holiday house on Simius beach, Villasimius" },
+    "house": { "h1": "The house: three bedrooms, terrace and garden" },
+    "photos": { "h1": "Photos of the house and Simius beach" },
+    "location": { "h1": "Location: Simius, Villasimius, Sardinia" },
+    "book": { "h1": "Check availability and book" },
+    "info": { "h1": "Good to know before you stay" },
+    "contact": { "h1": "Contact" },
+    "privacy": { "h1": "Privacy" },
+    "cookies": { "h1": "Cookies" }
+  },
+  "meta": {
     "home": {
-      "h1": "Holiday house on Simius beach, Villasimius"
+      "title": "Beach house on Simius beach, Villasimius | Casa Gad",
+      "description": "Detached house 10 metres from Simius beach in Villasimius, Sardinia. 3 bedrooms, 2 bathrooms, sleeps 6 + 2, terrace and garden. Book direct."
     },
     "house": {
-      "h1": "The house: three bedrooms, terrace and garden"
+      "title": "The house: 3 bedrooms, terrace, garden | Casa Gad",
+      "description": "Three double bedrooms and a sofa bed, two bathrooms, a full kitchen, terrace with sun deck, porches, garden, barbecue and a hot outdoor shower."
     },
     "photos": {
-      "h1": "Photos of the house and Simius beach"
+      "title": "Photos of the house and Simius beach | Casa Gad",
+      "description": "See the house, the garden, the terrace and Simius beach in Villasimius, Sardinia."
     },
     "location": {
-      "h1": "Location: Simius, Villasimius, Sardinia"
+      "title": "Location: Simius beach, Villasimius, Sardinia | Casa Gad",
+      "description": "A 1-minute walk to Simius beach. Notteri beach 15 minutes on foot, Capo Carbonara 18, Cagliari airport a 62-minute drive."
     },
     "book": {
-      "h1": "Check availability and book"
+      "title": "Book the holiday house in Villasimius | Casa Gad",
+      "description": "Check available dates and book directly with us. Check-in from 4:30 pm, check-out by 10:00 am."
     },
     "info": {
-      "h1": "Good to know before you stay"
+      "title": "Good to know: times, pets, parking | Casa Gad Villasimius",
+      "description": "Check-in and check-out times, pets (one welcome), parking, Wi-Fi, children and house rules."
     },
     "contact": {
-      "h1": "Contact"
+      "title": "Contact | Casa Gad, Villasimius",
+      "description": "Write to us with any questions about the holiday house in Simius, Villasimius."
     },
     "privacy": {
-      "h1": "Privacy"
+      "title": "Privacy | Casa Gad",
+      "description": "Casa Gad privacy notice."
     },
     "cookies": {
-      "h1": "Cookies"
+      "title": "Cookies | Casa Gad",
+      "description": "Casa Gad cookie notice."
     }
+  },
+  "alts": {
+    "0745": "Terrace with sun loungers, palm trees and a sea view",
+    "0746": "Covered porch with white curtains",
+    "0747": "Sun loungers on the terrace among the trees",
+    "0748": "Bougainvillea and sun loungers with the sea behind",
+    "0749": "Aerial view of Simius beach and the hills",
+    "0752": "Porch with dining table and sofa",
+    "0754": "Porch set up for eating outdoors",
+    "0756": "Full kitchen with patterned tiles",
+    "0757": "Kitchen with fridge and oven",
+    "0758": "Garden lawn with deck chairs",
+    "0759": "Porch with a daybed and blue cushions",
+    "0760": "Garden path among the plants",
+    "0761": "Bedroom with a double bed",
+    "0763": "Bathroom with shower, WC and bidet",
+    "0765": "Bedroom with a double bed and a map on the wall",
+    "0767": "Bedroom with a double bed and straw hats on the wall",
+    "0768": "Bedroom with a wrought-iron double bed",
+    "0769": "Living room with fireplace",
+    "0770": "Garden table under the trees",
+    "0772": "Hammock in the garden",
+    "0773": "Detail: fish painting",
+    "0774": "Bench with a blue cushion and bougainvillea",
+    "0775": "Front of the house with ivy and blue shutters"
+  },
+  "home": {
+    "eyebrow": "Simius · Villasimius · Sardinia",
+    "lead": "A detached house surrounded by Mediterranean shrubs, 10 metres from the sea. Three bedrooms, sleeps 6 + 2.",
+    "checkDates": "Check dates",
+    "seeHouse": "See the house",
+    "houseEyebrow": "The house",
+    "houseTitle": "The house",
+    "houseBody": "Three bedrooms, each with a double bed, plus a sofa bed: sleeps 6 + 2. Two full bathrooms with shower, WC and bidet; one is en-suite. A full kitchen and a living room with a fireplace. Air conditioning in the bedrooms, Wi-Fi. Linen and towels included, beach towels too.",
+    "houseLink": "Explore the house",
+    "cards": {
+      "bedroom": {
+        "eyebrow": "Bedroom",
+        "title": "Bedroom with a double bed",
+        "facts": "Air conditioning · Linen included",
+        "link": "See the house"
+      },
+      "kitchen": {
+        "eyebrow": "Kitchen",
+        "title": "Full kitchen",
+        "link": "See the house"
+      },
+      "outdoor": {
+        "eyebrow": "Outside",
+        "title": "Porches and garden",
+        "facts": "Barbecue · Hot outdoor shower",
+        "link": "See the photos"
+      }
+    },
+    "seaTitle": "10 metres from the sea",
+    "seaBody": "Step out of the front door and you are on Simius beach: a one-minute walk. We have beach umbrellas if you need them.",
+    "outsideTitle": "Outside",
+    "outsideLead": "A terrace with a sun deck, well-equipped porches for eating outdoors, a garden, a barbecue and a hot outdoor shower.",
+    "whereTitle": "Location",
+    "whereBody": "Simius, Villasimius, in the south of Sardinia.",
+    "whereLink": "How to get here →",
+    "datesTitle": "Check dates",
+    "datesLead": "Choose your dates and book directly with us.",
+    "datesLink": "Open the calendar",
+    "glanceTitle": "At a glance"
+  },
+  "glance": {
+    "checkIn": "Check-in from 4:30 pm",
+    "checkOut": "Check-out by 10:00 am",
+    "pet": "We welcome one pet",
+    "parking": "Parking on site",
+    "smoking": "No smoking",
+    "parties": "No parties or events",
+    "children": "Children welcome"
+  },
+  "details": {
+    "address": "Address",
+    "price": "Price / night",
+    "deposit": "Deposit",
+    "cancellation": "Cancellation",
+    "checkInMethod": "Check-in method",
+    "season": "Season",
+    "error": "We can't show these details right now.",
+    "retry": "Try again"
+  },
+  "distances": {
+    "simius": { "name": "Simius Beach", "time": "1 min walk" },
+    "notteri": { "name": "Notteri Beach", "time": "15 min walk" },
+    "carbonara": { "name": "Capo Carbonara Marine Protected Area", "time": "18 min walk" },
+    "tanka": { "name": "Tanka Golf Course", "time": "9 min drive" },
+    "giunco": { "name": "Porto Giunco Beach", "time": "16 min drive" },
+    "airport": { "name": "Elmas Airport (CAG)", "time": "62 min drive" }
+  },
+  "reviews": {
+    "title": "Reviews",
+    "onSource": "{{count}} reviews on",
+    "checked": "checked {{date}}",
+    "source": "VRBO"
+  },
+  "house": {
+    "eyebrow": "The house",
+    "lead": "A detached house surrounded by Mediterranean shrubs, 10 metres from the sea.",
+    "bedroomsTitle": "Bedrooms (3 doubles + sofa bed)",
+    "bedroomsBody": "Three bedrooms, each with a double bed, plus a sofa bed: sleeps 6 + 2. Air conditioning in the bedrooms.",
+    "kitchenTitle": "Kitchen and living room",
+    "kitchenBody": "A full kitchen and a living room with a fireplace.",
+    "bathsTitle": "Two bathrooms",
+    "bathsBody": "Two full bathrooms with shower, WC and bidet; one is en-suite.",
+    "terraceTitle": "Terrace and porches",
+    "terraceBody": "A terrace with a sun deck and well-equipped porches for eating outdoors.",
+    "gardenTitle": "Garden",
+    "gardenBody": "A garden among the Mediterranean shrubs, a barbecue and a hot outdoor shower.",
+    "includedTitle": "What's included",
+    "rulesTitle": "House rules",
+    "checkDates": "Check dates",
+    "included": {
+      "linen": "Linen and towels, beach towels too",
+      "umbrellas": "Beach umbrellas",
+      "wifi": "Wi-Fi",
+      "ac": "Air conditioning in the bedrooms",
+      "parking": "Parking on site"
+    }
+  },
+  "photos": {
+    "outside": "Outside",
+    "inside": "Inside",
+    "beach": "The beach",
+    "close": "Close",
+    "previous": "Previous photo",
+    "next": "Next photo",
+    "dialog": "Enlarged photo"
+  },
+  "location": {
+    "beachTitle": "Simius beach",
+    "beachBody": "Step out of the front door and you are on Simius beach: a one-minute walk.",
+    "maps": "Open in Google Maps",
+    "mapsNote": "(a link, no embedded map: no third-party cookies)",
+    "nearbyTitle": "Nearby beaches: Notteri, Porto Giunco",
+    "nearbyBody": "Distances from the house.",
+    "carbonaraTitle": "Capo Carbonara",
+    "carbonaraBody": "The Capo Carbonara Marine Protected Area is an 18-minute walk (1.6 km).",
+    "airportTitle": "Getting here (Cagliari airport)",
+    "airportBody": "Elmas Airport (CAG) · 62 min drive.",
+    "restaurantsTitle": "Restaurants nearby"
+  },
+  "restaurants": {
+    "tartana": { "name": "Bar La Tartana", "time": "4 min drive" },
+    "acqua": { "name": "Acqua e Sale", "time": "6 min drive" },
+    "lobby": { "name": "Lobby Lounge Bar", "time": "6 min drive" },
+    "delfino": { "name": "Delfino Club", "time": "18 min walk" },
+    "gnocco": { "name": "Gnocco&", "time": "19 min walk" }
+  },
+  "book": {
+    "stepsLabel": "Steps",
+    "stepDates": "Dates and guests",
+    "stepRequest": "Request",
+    "stepReply": "Reply",
+    "stepDeposit": "Deposit",
+    "calendarTitle": "Calendar",
+    "chooseDates": "Choose check-in and check-out",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "dow": {
+      "mon": "Mo",
+      "tue": "Tu",
+      "wed": "We",
+      "thu": "Th",
+      "fri": "Fr",
+      "sat": "Sa",
+      "sun": "Su"
+    },
+    "legendFree": "Free",
+    "legendBusy": "Unavailable",
+    "legendChosen": "Chosen",
+    "arrival": "Check-in",
+    "departure": "Check-out",
+    "checkInHelp": "Check-in from 4:30 pm",
+    "checkOutHelp": "Check-out by 10:00 am",
+    "guests": "Guests",
+    "adults": "Adults",
+    "fewerAdults": "Fewer adults",
+    "moreAdults": "More adults",
+    "children": "Children",
+    "fewerChildren": "Fewer children",
+    "moreChildren": "More children",
+    "pet": "Pet (one at most)",
+    "noPet": "No pet",
+    "addPet": "Add a pet",
+    "partyNote": "Maximum 6 + 2 guests (6 in the beds, 2 on the sofa bed).",
+    "quoteTitle": "Your quote",
+    "lines": {
+      "nights": "Nights",
+      "cleaning": "Final cleaning",
+      "pet": "Pet",
+      "tax": "Tourist tax (if enabled)",
+      "total": "Total",
+      "deposit": "Deposit to confirm",
+      "balance": "Balance"
+    },
+    "quoteCaption": "Price breakdown",
+    "continue": "Continue to request",
+    "noPay": "You pay nothing now. You pay the deposit only after we confirm.",
+    "howTitle": "How it works",
+    "how1": "Choose dates and guests, see the price.",
+    "how2": "Send us your request.",
+    "how3": "If we accept, you get a link for the deposit (Stripe).",
+    "timesTitle": "Times",
+    "checkInLabel": "Check-in",
+    "checkInValue": "from 4:30 pm",
+    "checkOutLabel": "Check-out",
+    "checkOutValue": "by 10:00 am",
+    "termsTitle": "Prices and terms"
+  },
+  "info": {
+    "faqTitle": "Frequently asked questions",
+    "times": {
+      "q": "Check-in times?",
+      "a": "Check-in from 4:30 pm, check-out by 10:00 am."
+    },
+    "pets": {
+      "q": "Pets?",
+      "a": "We welcome one pet."
+    },
+    "parking": {
+      "q": "Parking?",
+      "a": "Parking on site."
+    },
+    "wifi": {
+      "q": "Wi-Fi?",
+      "a": "Yes, there is Wi-Fi."
+    },
+    "children": {
+      "q": "Children?",
+      "a": "Children welcome."
+    },
+    "smoking": {
+      "q": "Smoking or parties?",
+      "a": "No smoking. No parties or events."
+    },
+    "checkInMethod": {
+      "q": "How does check-in work?"
+    },
+    "deposit": {
+      "q": "Security deposit?",
+      "a": "Paid on arrival, as today."
+    }
+  },
+  "contact": {
+    "writeTitle": "Write to us",
+    "name": "Name",
+    "nameHelp": "Required",
+    "email": "Email",
+    "emailHelp": "Enter a valid email",
+    "message": "Message",
+    "honeypot": "Website",
+    "consentBefore": "I have read the ",
+    "consentLink": "privacy notice",
+    "consentAfter": " and agree to my data being used to answer this message.",
+    "submit": "Send message",
+    "note": "Protected by App Check (invisible reCAPTCHA Enterprise).",
+    "addressTitle": "Address",
+    "place": "Simius, Villasimius, Sardinia"
+  },
+  "legal": {
+    "privacy": {
+      "controller": "Data controller",
+      "data": "What we collect (requests, bookings, contact)",
+      "basis": "Why and legal basis",
+      "payments": "Payments (Stripe)",
+      "guests": "Guest registration (Alloggiati Web)",
+      "retention": "How long we keep it",
+      "recipients": "Who receives data (Firebase/Google, Stripe, email)",
+      "transfers": "Transfers outside the EU",
+      "rights": "Your rights",
+      "complaints": "Contact and complaints (Garante)"
+    },
+    "cookies": {
+      "what": "What they are",
+      "technical": "Technical cookies we use",
+      "none": "No third-party profiling or analytics cookies (v1)",
+      "recaptcha": "reCAPTCHA Enterprise (App Check)",
+      "manage": "How to manage them in the browser"
+    }
+  },
+  "amenities": {
+    "wifi": "Wi-Fi",
+    "ac": "Air conditioning in the bedrooms",
+    "parking": "Parking on site",
+    "linen": "Linen and towels",
+    "umbrellas": "Beach umbrellas",
+    "barbecue": "Barbecue",
+    "shower": "Hot outdoor shower",
+    "terrace": "Terrace",
+    "garden": "Garden"
   },
   "notFound": {
     "title": "Page not found",

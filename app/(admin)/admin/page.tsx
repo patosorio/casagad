@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/Container";
+import { Container } from "@/components/site/Container";
 import { getT } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {

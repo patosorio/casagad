@@ -236,6 +236,30 @@ Rules tests deny anonymous, family, and owner clients on every document above. T
 npx firebase emulators:exec --only firestore,storage "npm run test:rules"
 ```
 
+## Content sources
+
+| What guests see | Where it lives |
+|---|---|
+| Page copy, navigation, alt text, titles, descriptions | `locales/it/site.json` and `locales/en/site.json` |
+| Confirmed facts: times, capacity, distances, VRBO score, CIN until it is confirmed | `lib/content/house.ts` |
+| Address, deposit percent, cancellation, check-in method, season, CIN once saved | Firestore `settings/public`, read on the server for that request |
+| Nightly price | Not shown. There is no public text field for it. |
+| Review quotes | `reviewQuotes` in `lib/content/house.ts`. The list is empty, so no quotes are rendered. |
+| Photos | `public/images`, described by `lib/content/image-manifest.json` |
+
+A missing `settings/public` document leaves the labels and hides the values. A failed read shows a neutral message and a retry link. Neither case fills in example text.
+
+## Images
+
+Originals are read from `../images` when that folder exists, otherwise from `../03-design/images`. `scripts/optimise-images.ts` writes AVIF and WebP into `public/images` and records width and height in `lib/content/image-manifest.json`. The widths are 640, 1024, 1600, and 2400. A width larger than the source is skipped. A source narrower than 640px is written at its own width. Files are not enlarged.
+
+Pages use `next/image` with `unoptimized` and the manifest `srcset`, so the image optimizer does not resize them again.
+
+```bash
+npm install -D sharp
+npx tsx scripts/optimise-images.ts
+```
+
 ## Internationalisation
 
 The URL chooses the language. There is no browser language detector, no locale cookie, and no automatic redirect.
@@ -272,11 +296,11 @@ Typed keys come from `lib/i18n/types.d.ts` (`CustomTypeOptions` on the Italian J
 
 Copy comes from the approved G4 HTML. Do not render `[GUIDO: …]`, `[ASK FAMILY: …]`, `[ACCOUNTANT …]`, or draft tags such as "bozza testo".
 
-The footer takes an optional `cin` string and renders `CIN {{cin}}` only when a non-empty value is passed. No page passes one, so the line stays hidden.
+The footer reads `settings/public` on each request. It renders `CIN {{cin}}` when that document has a CIN, otherwise when `lib/content/house.ts` has a confirmed CIN. Both are empty until the number is confirmed, so the line stays hidden. The address line appears only when `settings/public` has an address.
 
 Format dates, numbers, and money with `Intl` and `intlLocaleFor(locale)` (`it-IT` or `en-GB`). Currency is always EUR. Timezone is Europe/Rome. Switching language does not change prices or dates. Plurals use the `_one` / `_other` keys.
 
-`LanguageSwitch` uses `lib/i18n/routes.ts`. A known page goes to its pair (`/prenota/` ↔ `/en/book/`). An unknown path keeps the slug and swaps the `/en` prefix, so a 404 stays a 404. The click keeps the query string and the hash. Admin paths stay Italian. The document title is the page heading.
+`LanguageSwitch` uses `lib/i18n/routes.ts`. A known page goes to its pair (`/prenota/` ↔ `/en/book/`). An unknown path keeps the slug and swaps the `/en` prefix, so a 404 stays a 404. The click keeps the query string and the hash. Admin paths stay Italian. Each public page sets an absolute document title and description, a canonical URL, and hreflang for Italian, English, and `x-default` (Italian).
 
 ## 404 handling
 

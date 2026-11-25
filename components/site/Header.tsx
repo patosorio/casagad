@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitch } from "@/components/site/LanguageSwitch";
 import { navLabel } from "@/components/site/nav-label";
-import { Container } from "@/components/ui/Container";
+import { Container } from "@/components/site/Container";
 import type { Locale } from "@/lib/i18n/config";
 import { primaryNav, routeKeyFromPath, routes } from "@/lib/i18n/routes";
 

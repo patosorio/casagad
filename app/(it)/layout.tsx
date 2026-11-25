@@ -7,6 +7,7 @@ import { NONCE_HEADER } from "@/lib/security/csp";
 import "../globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://casagad.com"),
   title: {
     default: "Casa Gad",
     template: "%s | Casa Gad",
