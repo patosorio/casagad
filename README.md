@@ -1,101 +1,170 @@
-# Casa Gad web
+# Casa Gad
 
-Direct-booking site for one holiday house. Italian is the default language at `/`. English is at `/en/`. The owner admin is Italian only. This app is the Next.js full-stack service on Firebase App Hosting (OD-02). There is no Cloud Functions backend and no static export.
+Direct-booking site for one holiday house. Italian is the default language. English is at `/en/`. The owner admin is Italian only.
 
-## What changed (Prompt 01)
+## Stack
 
-Skeleton only. Brand tokens and self-hosted fonts are wired. Route groups exist as empty folders. There is one temporary home page at `/` so the app can build. i18n, Firebase, and features start in later prompts.
+| Package | Version |
+|---|---|
+| Node.js | `>=24 <25` |
+| Next.js | `~16.4.6` |
+| React | `~19.3.0` |
+| react-dom | `~19.3.0` |
+| i18next | `~27.2.7` |
+| react-i18next | `~18.0.3` |
+| Tailwind CSS | `4.3.3` |
+| TypeScript | `^5` |
 
-## Stack and pinned versions
+The app is a Next.js server on Firebase App Hosting with the Node.js 24 runtime. There is no Cloud Functions backend and no static export. `next.config.ts` sets `trailingSlash: true`, `cacheComponents`, and `experimental.globalNotFound`. It does not set `output: "export"`.
 
-| Package | Pin | Installed by create-next-app |
-|---|---|---|
-| Node | `>=24 <25` | Patricia's machine must be Node 24 |
-| next | `~16.4.6` | 16.4.6 |
-| react | `~19.3.0` | 19.3.0 |
-| react-dom | `~19.3.0` | 19.3.0 |
-| tailwindcss | 4.3.3 | 4.3.3 |
-| typescript | `^5` | as installed |
-| @types/node | `^24.0.0` | was `^20` from create-next-app; Vitest 5 asks for `^22` or `>=24` |
+`next`, `react`, `react-dom`, `i18next`, and `react-i18next` stay on `~` ranges. If `npm install` rewrites a range to `^`, put the tilde back. The lockfile is the exact version.
 
-`next`, `react`, and `react-dom` use `~` so a later install can take a 16.4 / 19.3 patch and cannot jump a minor. Vitest and Playwright are not listed here until the install below writes them into the lockfile.
+Local `npm run dev` and `npm start` do not talk to Firebase, Stripe, or email.
 
-`next.config.ts` does not set `output: "export"`. `proxy.ts` (not `middleware.ts`) arrives in Prompt 04.
+## Requirements
 
-## Folder map
+- Node.js 24 (`>=24 <25`)
+- npm
+
+## Getting started
+
+From this directory:
+
+```bash
+npm install
+npm run dev
+```
+
+The app reads no environment variables. Names, when any are added, go in `.env.example` only. Do not commit `.env` or `.env.local`.
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Development server |
+| `npm test` | Unit tests with Vitest (`tests/unit`) |
+| `npm run test:rules` | Firestore rules tests in `tests/rules`. Passes when that folder has no tests. |
+| `npm run test:e2e` | Playwright against `http://127.0.0.1:3000`. Start the app first. It does not start one. Projects are mobile Safari, Android Chrome, and desktop Chrome. |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run lint` | ESLint |
+| `npm run build` | Production build |
+| `npm start` | Serve the production build |
+
+From `web/`:
+
+```bash
+npm run typecheck && npm run lint && npm test && npm run build
+npm run start
+```
+
+With `npm start` on port 3000:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/xyz/
+curl -s http://localhost:3000/xyz/ | grep -o '<html[^>]*lang="it"'
+curl -s http://localhost:3000/xyz/ | grep -o 'Questa pagina non c'
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/en/xyz/
+curl -s http://localhost:3000/en/xyz/ | grep -o '<html[^>]*lang="en"'
+curl -s http://localhost:3000/en/xyz/ | grep -o "This page doesn"
+curl -s http://localhost:3000/xyz/ http://localhost:3000/en/xyz/ | grep -c '__next_error__'
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/la-casa/
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/en/the-house/
+npm run test:e2e
+```
+
+Expect 404 for `/xyz/` and `/en/xyz/`, the matching `lang` and 404 sentence, a count of `0` for `__next_error__`, and 200 for `/la-casa/` and `/en/the-house/`. A production build lists `/_not-found` as dynamic (`ƒ`), the public pages as static (`○`), and the proxy.
+
+## Project structure
 
 ```
 app/
-  layout.tsx          temporary root layout, lang="it"
-  page.tsx            temporary home (H1 only)
-  globals.css         Tailwind v4 @theme, brand v2 tokens
-  (it)/               Italian routes (Prompt 02)
-  (en)/en/            English routes (Prompt 02)
-  (admin)/admin/      Italian admin (later)
-  api/                thin handlers (later)
-components/{ui,site,booking,admin}/
-lib/{fonts.ts,i18n,firebase,content,seo}/
-locales/{it,en}/
-shared/               pure values safe for client and server
-  schemas/
-server/{domain,use-cases,repositories,adapters,auth,workers,audit}/
-  adapters/{firestore,stripe,mail,ical,pdf}/
-public/fonts/         Cormorant Garamond + Jost woff2
-public/images/
-scripts/
-tests/{unit,rules,integration,e2e}/
-.cursor/rules/        casagad.mdc, server.mdc, i18n.mdc
+  (it)/                 Italian public pages, URL `/`, <html lang="it">
+  (en)/en/              English public pages, URL `/en/`, <html lang="en">
+  (admin)/admin/        Italian admin, noindex
+  global-not-found.tsx  Unmatched URLs
+  globals.css           Tailwind v4 theme and brand tokens
+components/site/        Header, footer, language switch
+lib/i18n/               Locale config, routes, server and client i18n
+locales/it/             common, site, booking, errors, admin
+locales/en/             common, site, booking, errors
+proxy.ts                Sets x-casagad-locale from the path
+public/fonts/           Self-hosted Cormorant Garamond and Jost
+server/                 Server-only domain code
+shared/                 Types and helpers safe for client and server
+tests/unit/             Vitest
+tests/e2e/              Playwright
 ```
 
-Empty folders contain `.gitkeep`. Real server files, when they arrive, start with `import "server-only"`.
+`(it)`, `(en)`, and `(admin)` are route groups and do not appear in the URL. There is no `app/page.tsx`. `/` is `app/(it)/page.tsx`.
 
-## Rules summary
+| Page | Italian | English |
+|---|---|---|
+| Home | `/` | `/en/` |
+| The house | `/la-casa/` | `/en/the-house/` |
+| Photos | `/foto/` | `/en/photos/` |
+| Location | `/dove-siamo/` | `/en/location/` |
+| Book | `/prenota/` | `/en/book/` |
+| Good to know | `/informazioni/` | `/en/good-to-know/` |
+| Contact | `/contatti/` | `/en/contact/` |
+| Privacy | `/privacy/` | `/en/privacy/` |
+| Cookies | `/cookie/` | `/en/cookies/` |
 
-- The browser never reads or writes Firestore.
-- One Firestore transaction per business change: state, audit row, and outbox together. No Stripe, Resend, fetch, or Storage inside the callback.
-- Money is integer cents, EUR. Stay dates are `YYYY-MM-DD` in Europe/Rome. Check-out is exclusive.
-- The URL chooses the language. No detector, no locale cookie, no automatic redirect.
-- User-facing strings live in `locales/`. Do not render unconfirmed `[GUIDO]`, `[ASK FAMILY]`, or `[ACCOUNTANT]` facts.
+Public paths end with `/`. A request without the slash redirects to the slashed URL. `server/` holds `.gitkeep` files only. A server module starts with `import "server-only"`.
 
-## Commands Patricia runs
+## Internationalisation
 
-From `web/`, after this step:
+The URL chooses the language. There is no browser language detector, no locale cookie, and no automatic redirect.
 
-```bash
-cd ~/Projects/clients-workspace/casagad/web
-npm install
-npm install -D vitest @vitest/coverage-v8 @playwright/test
-npx playwright install
-npm run typecheck && npm run lint && npm test && npm run build
-npm run dev   # open http://localhost:3000
-git add -A && git commit -m "Scaffold Casa Gad web app"
-```
+Each language has its own root layout, so the first HTML response has the right `<html lang>`. Italian is `app/(it)/layout.tsx`. English is `app/(en)/en/layout.tsx`. Admin is `app/(admin)/admin/layout.tsx` and stays Italian. Do not add `app/layout.tsx`.
 
-`npm test` runs Vitest on `tests/unit`. `npm run test:rules` is ready and passes with no rules tests yet. `npm run test:e2e` runs Playwright (mobile Safari, Android Chrome, desktop). There are no end-to-end tests yet.
+`proxy.ts` sets `x-casagad-locale` from the path on every matched request and overwrites a client-sent value. That step stays first. `/en` and `/en/…` are English. Every other path, including `/enx/`, is Italian.
 
-## Env var names
+### Namespaces
 
-None yet. `.env.example` is a placeholder. Do not commit `.env` or `.env.local`.
+| File | Who uses it |
+|---|---|
+| `common` | Skip link, language switch, menu, footer, brand |
+| `site` | Nav labels, page headings, 404 |
+| `booking` | Night and guest plurals (`nights_one` / `nights_other`, `guests_one` / `guests_other`) |
+| `errors` | One key per `appCode` from the API error list |
+| `admin` | Italian only (`locales/it/admin.json`) |
 
-## Local vs production
+Public namespaces must have the same key tree in Italian and English. `tests/unit/i18n-keys.test.ts` fails when a key is missing on either side. Admin is not part of that check.
 
-Local `npm run dev` serves the skeleton at `/` with Italian `lang`, brand colours, and the self-hosted fonts. Nothing talks to Firebase, Stripe, or email. Production is the same shell until later prompts add data and App Hosting. Prompt 04 is the first real deploy check.
+### Adding a string
 
-## Open items
+1. Add the key to `locales/it/{namespace}.json`. Italian is the source.
+2. Add the same key to `locales/en/{namespace}.json` for `common`, `site`, `booking`, and `errors`. Do not add `locales/en/admin.json`.
+3. In a Server Component or in `generateMetadata`, call `getT(locale, ns)` from `lib/i18n/server.ts`. Each call builds a new i18next instance with `createInstance()`. Do not keep a shared instance, and do not call `changeLanguage` on one.
+4. In a Client Component, render under `I18nClientProvider` with that locale and only the namespaces the island needs, then use `useTranslation(ns)`. The provider is built from the JSON the server serialised. Header and the language switch already sit under it.
+5. Run `npm test`. A missing English key fails the tree test.
 
-- Prompt 02 replaces `app/layout.tsx` and `app/page.tsx` with route-group layouts (`html lang` per language). Those files are only here so the skeleton builds.
-- `web/.git/config` has no `origin` yet. The commit above stays local until the GitHub remote is added and pushed.
-- create-next-app left `public/next.svg`, `vercel.svg`, `globe.svg`, `file.svg`, and `window.svg`. Nothing references them.
-- OD-05: the automatic balance card-link email stays off until Patricia confirms it (Prompt 16).
-- Resource locations are confirmed by Patricia at provisioning (TR-08).
-- Vitest and Playwright versions are whatever the lockfile records after the install above.
+In development and test, a key missing from both languages throws (`Missing i18n key: …`). i18next only calls `missingKeyHandler` when `saveMissing` is on, so those environments turn it on and the handler throws. There is no backend, so nothing is written. Production leaves `saveMissing` off and falls back to Italian.
 
-## Needs design review
+Typed keys come from `lib/i18n/types.d.ts` (`CustomTypeOptions` on the Italian JSON). Do not cast a bad key away.
 
-None from this step. The Pietra-on-Calce token (`pietra-calce`, `#60686C`) is the contrast adjustment already recorded in the approved G4 CSS.
+### Copy
 
-## Checks
+Copy comes from the approved G4 HTML. Do not render `[GUIDO: …]`, `[ASK FAMILY: …]`, `[ACCOUNTANT …]`, or draft tags such as "bozza testo".
 
-Reviewed in source: folder map, no `output: "export"`, no `next/font/google`, tokens match `03-design/assets/casagad.css`, font files are the six brand woff2 files, rules files exist, README sections above are filled in. `next/font` options, including each `unicode-range`, are written as string literals in `lib/fonts.ts`. Vitest config is `vitest.config.mts` so Vite loads it as ESM.
+The footer takes an optional `cin` string and renders `CIN {{cin}}` only when a non-empty value is passed. No page passes one, so the line stays hidden.
 
-Patricia must run typecheck, lint, test, and build. Those commands were not run here.
+Format dates, numbers, and money with `Intl` and `intlLocaleFor(locale)` (`it-IT` or `en-GB`). Currency is always EUR. Timezone is Europe/Rome. Switching language does not change prices or dates. Plurals use the `_one` / `_other` keys.
+
+`LanguageSwitch` uses `lib/i18n/routes.ts`. A known page goes to its pair (`/prenota/` ↔ `/en/book/`). An unknown path keeps the slug and swaps the `/en` prefix, so a 404 stays a 404. The click keeps the query string and the hash. Admin paths stay Italian. The document title is the page heading.
+
+## 404 handling
+
+On Next.js 16.4 with `cacheComponents`, a `notFound()` or `redirect()` thrown while a page or layout renders does not behave like a normal status response ([vercel/next.js #100596](https://github.com/vercel/next.js/issues/100596), checked on a 16.4.6 build). `notFound()` answers with an empty `<html id="__next_error__">` shell: the 404 text appears only after JavaScript. Under `cacheComponents`, both `notFound()` and `redirect()` thrown in a page or layout answer HTTP 200.
+
+Status is therefore decided in `proxy.ts`, before rendering. Unknown URLs are not routed through a page that calls `notFound()`.
+
+There is no `[...slug]` catch-all and no `app/not-found.tsx`. An unknown URL matches no route. `app/global-not-found.tsx` reads `x-casagad-locale` (`export const instant = false`, fallback `it`) and renders `NotFoundDocument` for that locale: `<html lang>`, header, footer, 404 text, and `noindex`.
+
+| URL | Language |
+|---|---|
+| `/xyz/` | Italian |
+| `/en/xyz/` | English |
+| `/enx/` | Italian (`/en` is a segment, not a string prefix) |
+
+`app/(it)/not-found.tsx`, `app/(en)/en/not-found.tsx`, and `app/(admin)/admin/not-found.tsx` only cover a `notFound()` thrown inside a page that did match.

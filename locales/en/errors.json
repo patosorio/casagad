@@ -1,0 +1,15 @@
+{
+  "VALIDATION": "Check the highlighted fields and try again.",
+  "DATES_UNAVAILABLE": "These dates are not available.",
+  "MIN_STAY": "These dates need a longer stay.",
+  "TOO_MANY_GUESTS": "There are more guests than the house allows.",
+  "TOO_MANY_PETS": "You can bring one pet.",
+  "NO_RATE": "There is no rate for these dates.",
+  "HOLD_EXPIRED": "This payment link is no longer valid.",
+  "WRONG_STATUS": "That action is not available right now.",
+  "RATE_LIMITED": "Too many attempts. Try again in a few minutes.",
+  "NOT_ALLOWED": "You do not have permission for this action.",
+  "UNAUTHENTICATED": "Sign in to continue.",
+  "PAYMENT_PROVIDER": "The payment did not go through. Try again.",
+  "INTERNAL": "Something went wrong. Try again."
+}

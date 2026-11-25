@@ -1,0 +1,50 @@
+{
+  "homeLabel": "Casa Gad, Villasimius: home",
+  "nav": {
+    "label": "Main",
+    "mobileLabel": "Main (mobile)",
+    "house": "The house",
+    "photos": "Photos",
+    "location": "Location",
+    "info": "Good to know",
+    "contact": "Contact",
+    "book": "Book"
+  },
+  "pages": {
+    "home": {
+      "h1": "Holiday house on Simius beach, Villasimius"
+    },
+    "house": {
+      "h1": "The house: three bedrooms, terrace and garden"
+    },
+    "photos": {
+      "h1": "Photos of the house and Simius beach"
+    },
+    "location": {
+      "h1": "Location: Simius, Villasimius, Sardinia"
+    },
+    "book": {
+      "h1": "Check availability and book"
+    },
+    "info": {
+      "h1": "Good to know before you stay"
+    },
+    "contact": {
+      "h1": "Contact"
+    },
+    "privacy": {
+      "h1": "Privacy"
+    },
+    "cookies": {
+      "h1": "Cookies"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "eyebrow": "404",
+    "h1": "This page doesn't exist",
+    "lead": "The link may be old. From here you can go back to the house or check dates.",
+    "home": "Back to home",
+    "dates": "Check dates"
+  }
+}

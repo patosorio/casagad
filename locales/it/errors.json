@@ -1,0 +1,15 @@
+{
+  "VALIDATION": "Controlla i campi evidenziati e riprova.",
+  "DATES_UNAVAILABLE": "Queste date non sono disponibili.",
+  "MIN_STAY": "Per queste date serve un soggiorno più lungo.",
+  "TOO_MANY_GUESTS": "Gli ospiti sono più del massimo previsto.",
+  "TOO_MANY_PETS": "Puoi portare un solo animale.",
+  "NO_RATE": "Per queste date non c'è una tariffa.",
+  "HOLD_EXPIRED": "Il link per il pagamento non è più valido.",
+  "WRONG_STATUS": "Questa azione non è possibile adesso.",
+  "RATE_LIMITED": "Troppi tentativi. Riprova tra qualche minuto.",
+  "NOT_ALLOWED": "Non hai il permesso per questa azione.",
+  "UNAUTHENTICATED": "Accedi per continuare.",
+  "PAYMENT_PROVIDER": "Il pagamento non è riuscito. Riprova.",
+  "INTERNAL": "Qualcosa non ha funzionato. Riprova."
+}

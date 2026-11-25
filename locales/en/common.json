@@ -1,0 +1,25 @@
+{
+  "brand": {
+    "name": "Casa Gad",
+    "place": "Villasimius"
+  },
+  "skip": "Skip to content",
+  "language": {
+    "label": "Language",
+    "it": "Italiano",
+    "en": "English"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Close"
+  },
+  "footer": {
+    "place": "Simius, Villasimius, Sardinia",
+    "site": "Site",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "copyright": "© Casa Gad",
+    "cin": "CIN {{cin}}"
+  }
+}

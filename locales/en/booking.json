@@ -1,0 +1,6 @@
+{
+  "nights_one": "{{count}} night",
+  "nights_other": "{{count}} nights",
+  "guests_one": "{{count}} guest",
+  "guests_other": "{{count}} guests"
+}

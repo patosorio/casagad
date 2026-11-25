@@ -11,18 +11,32 @@ Execution
 - Stop at the prompt's stopping point. Do not start the next step.
 
 Architecture (approved OD-02)
-- One Next.js App Router app (TypeScript strict) on Firebase App Hosting. No Cloud Functions, no Python, no static export.
+- One Next.js App Router app (TypeScript strict) on Firebase App Hosting. No Cloud Functions, no Python, no static export. Do not set `output: "export"`.
+- Three root layouts, and no shared `app/layout.tsx`. Do not add `app/page.tsx`, `app/layout.tsx`, `app/not-found.tsx`, or a `[...slug]` catch-all. `/` is `app/(it)/page.tsx`. The `(it)`, `(en)`, and `(admin)` groups are not part of the URL. English pages live at `app/(en)/en/`. Admin lives at `app/(admin)/admin/`.
+- Keep `next`, `react`, and `react-dom` on `~` ranges. If an install rewrites a range to `^`, restore the tilde. The lockfile is the exact version.
 - web/app = routes, layouts, thin route handlers and server actions only. web/server = server-only domain, use cases, repositories, adapters (firestore, stripe, mail, ical, pdf), auth, workers, audit; start each server file with `import 'server-only'`. web/shared = pure types, zod schemas, date/pricing helpers safe for client and server. web/components = UI (ui/, site/, booking/, admin/). No business logic in components or route files.
 - The browser never reads or writes Firestore. All reads happen on the server at request time; all writes go through server actions or route handlers that call use cases. Firestore/Storage rules are deny-all for clients.
 - One Firestore transaction per business change: business state + audit row + outbox items together. Never call Stripe, Resend, fetch or Storage inside a transaction callback (it can re-run).
 - Money: integer cents, EUR. Stay dates: YYYY-MM-DD, Europe/Rome, check-out exclusive. Never take amounts from the client.
 - Firebase Admin via Application Default Credentials (no service-account key files).
+- The automatic balance card-link email stays off until the owner confirms it. Do not enable that send.
 
 Code quality
 - Follow current Next.js App Router practices for the pinned version (Next 16.4.x): Server Components by default, "use client" only for interactive islands, async request APIs, proxy.ts (not middleware.ts).
 - Clean, typed, small modules; no `any`, no casts to hide type errors; reuse components and layouts (one Header, one Footer, one Button set, shared form fields); consistent spacing and brand v2 tokens from the approved G4 HTML (03-design/assets/casagad.css) moved into Tailwind v4 @theme. One primary button per screen, 48 px tap targets, body ≥ 16 px, visible focus, WCAG 2.1 AA.
+- All sections use the shared Container; never hand-roll widths or paddings.
 - Validate every input with shared zod schemas on the server. Map domain errors to appCode (API §1) and to i18next `errors` keys; never show raw zod or stack messages.
 - Security: no secrets in client code or NEXT_PUBLIC_* except Firebase web config and the reCAPTCHA site key; no dangerouslySetInnerHTML; logs carry correlation and booking ids only, never emails, phones, ID data or full bodies.
+- 404s, redirects and access (Next 16.4 + `cacheComponents`, vercel/next.js #100596; tested on a 16.4.6 build, 24 Nov 2026). A `notFound()` thrown while a page or layout renders sends Next's empty `<html id="__next_error__">` shell (the 404 text only appears after JavaScript), and under `cacheComponents` both `notFound()` and `redirect()` thrown in a page or layout answer HTTP 200. So every status-deciding check runs in `proxy.ts`, before rendering (where the Next docs place a 404 check). Unknown records always get a real 404; never a 200 "not found" page.
+  - Unknown URLs: no `[...slug]` catch-alls. They match no route and `app/global-not-found.tsx` renders the IT or EN 404 from the `x-casagad-locale` header set in `proxy.ts`. That header is the first step in `proxy.ts`: set it from the path and overwrite any client-sent value. `/en` and `/en/…` are `en`; every other path is `it`. Keep this step first when adding later proxy work.
+  - Pages that show one stored record (v1: admin `/admin/prenotazione/?id=`; any later guest-link page): `proxy.ts` checks existence with ONE keyed doc get (no queries) through a `server-only` repository function shared with the page (e.g. `bookingExists(id)` in `server/repositories/bookings.ts`). A malformed key (zod, before any read) or a miss → `NextResponse.rewrite` to the unmatched internal path `/_casagad-404/` (never create that route; clear the query; pass the same request headers) → HTTP 404 with the right `lang` and text. Malformed and unknown get the identical response.
+  - Admin order: for every `/admin/*` path except `/admin/accedi/`, `proxy.ts` first runs the same session check as `requireRole` (TR-06: `verifySessionCookie(cookie, true)` + `users/{uid}` `active`/`role`, one shared `server/auth` function). No or invalid session → 307 to `/admin/accedi/` (never 404 or 200, so ids cannot be probed). Signed in but without the route's role → no existence check; the layout shows "Nessun accesso". Only an allowed user reaches the existence check. The admin layout, every page, server action and admin route still call `requireRole` (defence in depth; `proxy.ts` is never the only guard).
+  - The page re-reads the record it renders (one extra keyed read, accepted; nothing is passed from `proxy.ts` to the page). If the record vanished in between (rare race with a delete or retention purge), the page calls `notFound()`; only that race may show the shell described above.
+  - Guest-link pages (none in v1; if one is added): a random token of at least 128 bits, only its SHA-256 stored as the doc id; `proxy.ts` hashes and does one get; malformed, unknown and expired get the same 404; the token is never logged.
+  - The booking ref `CG-YYYY-NNNN` is sequential: never look a booking up by ref on a public page (it would tell anyone which refs exist). `richiesta-inviata` / `request-sent` shows the ref without a lookup (Prompt 09, TR-07).
+  - `export const dynamicParams = false` is rejected by the build under `cacheComponents`; do not use it. Route handlers (`route.ts`, e.g. the iCal feed) are not affected: return `new Response(null, { status: 404 })`.
+  - `proxy.ts` logs carry the route pattern and outcome only: no ids, tokens, cookies or emails.
+  - Every route that can answer "not found" gets the curl check (status 404, `lang`, localized text, no `__next_error__`); admin routes also: no session → 307 to `/admin/accedi/`. When Next ships a fix for #100596, re-test page-level `notFound()` and `redirect()` and simplify.
 
 i18n (i18next + react-i18next, TS-04)
 - URL decides the language. No browser language detector, no locale cookie, no automatic redirects.
@@ -31,6 +45,7 @@ i18n (i18next + react-i18next, TS-04)
 - Copy comes from brand v2 / approved G4 HTML. Keep [GUIDO: …], [ASK FAMILY: …], [ACCOUNTANT …] values out of rendered copy: unconfirmed facts render from settings or stay hidden.
 
 Documentation and checks
-- Update web/README.md every prompt: what changed, structure, env var names, commands Patricia runs, local vs production behaviour, open items, "Needs design review" list.
+- `web/README.md` holds the project description and the development notes (stack, requirements, install, environment variable names only, scripts, structure, i18n, 404 handling, security headers). Do not add a `web/docs/` folder. No prompt numbers, changelog, or instructions for Cursor. When a prompt updates the README, change only the relevant section.
+- Coding rules belong in this file, or in `server.mdc` / `i18n.mdc` when they are scoped there. Technical notes, including the Next.js #100596 404 workaround, belong in `web/README.md`.
 - Add or update tests for what you build (Vitest unit, rules tests, integration with emulators, Playwright where stated). Say which checks you could only review in source and which Patricia must run.
 - Final message of every prompt: files created/edited, acceptance criteria status (met in source / needs Patricia's run), commands for Patricia, open questions.

@@ -1,0 +1,50 @@
+{
+  "homeLabel": "Casa Gad, Villasimius: home",
+  "nav": {
+    "label": "Principale",
+    "mobileLabel": "Principale (mobile)",
+    "house": "La casa",
+    "photos": "Foto",
+    "location": "Dove siamo",
+    "info": "Informazioni",
+    "contact": "Contatti",
+    "book": "Prenota"
+  },
+  "pages": {
+    "home": {
+      "h1": "Casa vacanze sulla spiaggia di Simius, a Villasimius"
+    },
+    "house": {
+      "h1": "La casa: tre camere, terrazza e giardino"
+    },
+    "photos": {
+      "h1": "Foto della casa e della spiaggia di Simius"
+    },
+    "location": {
+      "h1": "Dove siamo: Simius, Villasimius, Sardegna"
+    },
+    "book": {
+      "h1": "Verifica la disponibilità e prenota"
+    },
+    "info": {
+      "h1": "Informazioni utili per il soggiorno"
+    },
+    "contact": {
+      "h1": "Contatti"
+    },
+    "privacy": {
+      "h1": "Privacy"
+    },
+    "cookies": {
+      "h1": "Cookie"
+    }
+  },
+  "notFound": {
+    "title": "Pagina non trovata",
+    "eyebrow": "404",
+    "h1": "Questa pagina non c'è",
+    "lead": "Forse il link è vecchio. Da qui puoi tornare alla casa o controllare le date.",
+    "home": "Torna alla home",
+    "dates": "Verifica le date"
+  }
+}
